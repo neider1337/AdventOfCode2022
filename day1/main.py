@@ -32,7 +32,7 @@ def count_calories(list_comp:list):
 
 def get_top3_calories(list_comp:list):
     sum_list = [sum(bag) for bag in list_comp]
-    return sorted(sum_list)[len(sum_list)-3:len(sum_list)]
+    return sum(sorted(sum_list)[len(sum_list)-3:len(sum_list)])
 
 
 if __name__ == '__main__':
