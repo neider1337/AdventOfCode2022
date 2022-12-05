@@ -1,7 +1,9 @@
 from collections import deque
 def main():
     OpenFile('input.txt')
-    MoveFields(OpenFile('input.txt'))
+    MoveFieldsListsWay(OpenFile('input.txt'))
+    MoveFieldsListsWayMultiple(OpenFile('input.txt'))
+
 '''
                     [L]     [H] [W]
                 [J] [Z] [J] [Q] [Q]
@@ -19,16 +21,35 @@ def OpenFile(input):
         text_fixed = [x[0:len(x)-1].split() for x in text]
     return text_fixed
 
-def MoveFields(commands):
+def MoveFieldsListsWay(commands):
+    string = ''
     containers = [['S','P','W','N','J','Z'],['T','S','G'],['H','L','R','Q','V'],['D','T','S','V'],['J','M','B','D','T','Z','Q'],['L','Z','C','D','J','T','W','M'],['J','T','G','W','M','P','L'],['H','Q','F','B','T','M','G','N'],['W','Q','B','P','C','G','D','R']]
-    for item in commands:
-        print(item)
-        what = containers[int(item[3])-1][0:int(item[1])]
-        for letter in what:
-            containers[int(item[5]) - 1].insert(0 ,letter)
-        containers[int(item[3])-1] = containers[int(item[3])-1][int(item[1]):len(containers[int(item[3])-1])]
+    for command in commands:
+        list_of_moved_containers = containers[int(command[3])-1][0:int(command[1])]
+        number_of_container_dest = int(command[5])-1
+        number_of_container_source = int(command[3])-1
+        amount_of_containers = int(command[1])
+        for container in list_of_moved_containers:
+            containers[number_of_container_dest].insert(0, container)
+        containers[number_of_container_source] = containers[number_of_container_source][amount_of_containers:]
+    for i in containers:
+        string += i[0]
+    return string
 
-    return containers
 
+def MoveFieldsListsWayMultiple(commands):
+    string = ''
+    containers = [['S','P','W','N','J','Z'],['T','S','G'],['H','L','R','Q','V'],['D','T','S','V'],['J','M','B','D','T','Z','Q'],['L','Z','C','D','J','T','W','M'],['J','T','G','W','M','P','L'],['H','Q','F','B','T','M','G','N'],['W','Q','B','P','C','G','D','R']]
+    for command in commands:
+        list_of_moved_containers = containers[int(command[3])-1][0:int(command[1])]
+        number_of_container_dest = int(command[5])-1
+        number_of_container_source = int(command[3])-1
+        amount_of_containers = int(command[1])
+        containers[number_of_container_dest] = list_of_moved_containers + containers[number_of_container_dest]
+        containers[number_of_container_source] = containers[number_of_container_source][amount_of_containers:]
+    for i in containers:
+        string += i[0]
+    print(string)
+    return string
 if __name__ == '__main__':
     main()
