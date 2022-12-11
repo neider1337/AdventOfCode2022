@@ -1,11 +1,13 @@
+#check why this doesn't work, why it gives too much of output
+
+
+
 
 def main():
     input = process_input('input.txt')
     horizontal_count = process_treelines(input)
     vertical_input = get_vertical_data(input)
     vertical_count = process_treelines(vertical_input)
-    print(vertical_count)
-
     print(f'total sum of trees visible is : {horizontal_count + vertical_count}')
 def process_input(filename):
     with open(filename) as f:
@@ -14,13 +16,12 @@ def process_input(filename):
 
 def get_vertical_data(input):
     vertical_trees = []
-    for x in range(len(input[0])):
+    for x in range(len(input)):
         treeline = ''
         for item in input:
             treeline += item[x]
         vertical_trees.append(treeline)
     return vertical_trees
-
 
 def process_treelines(input):
     counter = 0
@@ -28,7 +29,6 @@ def process_treelines(input):
         counter += process_one_treeline(item, False)
         counter += process_one_treeline(item, True)
     return counter
-
 
 def process_one_treeline(line, reverse):
     tree_counter = 0
